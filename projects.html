@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Shubhu</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; font-family: 'Inter', sans-serif; 
+            color: white; display: flex; justify-content: center; 
+            align-items: center; flex-direction: column; 
+            cursor: none !important; 
+        }
+
+        #bg-video { 
+            position: fixed; right: 0; bottom: 0; 
+            min-width: 100%; min-height: 100%; 
+            z-index: -1; object-fit: cover; 
+        }
+
+        .main-container {
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            display: flex; flex-direction: column; align-items: center;
+            position: relative;
+            width: 350px;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .navbar a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: none !important;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+        .navbar a:hover { color: #fff; }
+        .navbar a.active { 
+            color: #7b2cbf; 
+            border-bottom: 2px solid #7b2cbf; 
+        }
+
+        #overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.95); z-index: 10000; 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: none !important; transition: opacity 0.5s ease; 
+        }
+
+        .audio-controls { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; z-index: 100; cursor: none !important; }
+        #speaker-icon { font-size: 1.5rem; cursor: none !important; color: #7b2cbf; }
+        #volume-slider { cursor: none !important; width: 80px; }
+        
+        .cursor-glow { 
+            position: fixed; width: 15px; height: 15px; background-color: #7b2cbf; 
+            border-radius: 50%; pointer-events: none; z-index: 9999; 
+            box-shadow: 0 0 15px #7b2cbf, 0 0 30px #7b2cbf; 
+            opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.2s ease; 
+        }
+
+        .logo { width: 80px; height: auto; margin-bottom: 10px; }
+        .brand { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px; }
+        .name { font-size: 3rem; font-weight: 700; color: #7b2cbf; text-shadow: 0 0 15px #7b2cbf; margin: 0; }
+        .tagline { font-size: 1rem; margin: 0; color: #ddd; }
+        .location-container { font-size: 0.8rem; color: #999; cursor: none !important; margin-top: 5px; }
+        
+        .discord-card { background: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(10px); border: 1px solid #333; margin-top: 15px; }
+        #avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #222; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; position: absolute; bottom: 0px; right: 0px; border: 2px solid #000; }
+        
+        .social-links { margin-top: 20px; display: flex; gap: 20px; font-size: 1.5rem; }
+        .social-links a { color: #ffffff; cursor: none !important; }
+
+        /* Copyright Footer */
+        footer { margin-top: 25px; font-size: 0.7rem; color: #666; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="overlay" onclick="enterSite()"><h1>CLICK TO ENTER</h1></div>
+
+    <audio id="bg-audio" loop><source src="audio.mp3" type="audio/mp3"></audio>
+
+    <div class="audio-controls">
+        <i id="speaker-icon" class="fas fa-volume-up"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+    </div>
+
+    <div id="cursor" class="cursor-glow"></div>
+    <video autoplay muted loop id="bg-video"><source src="BG.mp4" type="video/mp4"></video>
+
+    <div class="main-container">
+        <nav class="navbar">
+            <a href="index.html" class="active">Info</a>
+            <a href="projects.html">Projects</a>
+        </nav>
+
+        <div class="brand">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h1 class="name">@Shubhu</h1>
+            <p class="tagline">An isolated frequency.</p>
+            <div class="location-container"><i class="fa-solid fa-location-dot"></i> Nepal</div>
+            <div id="discord-status" class="discord-card">
+                <div class="avatar-container"><img id="avatar" src="" alt="Avatar"><div id="status-indicator" class="status-dot"></div></div>
+                <div class="user-info"><div id="username" class="username">Loading...</div><div id="activity" class="activity">Loading...</div></div>
+            </div>
+            <div class="social-links">
+                <a href="#" class="discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="youtube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="mailto:your-email@example.com" class="email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            
+            <footer>&copy; 2026 @Shubhu. All rights reserved.</footer>
+        </div>
+    </div>
+
+    <script>
+        function enterSite() {
+            document.getElementById('overlay').style.display = 'none';
+            const audio = document.getElementById('bg-audio');
+            audio.play();
+            audio.volume = document.getElementById('volume-slider').value;
+        }
+
+        const speaker = document.getElementById('speaker-icon');
+        const audio = document.getElementById('bg-audio');
+        speaker.addEventListener('click', () => {
+            if (audio.paused) { audio.play(); speaker.className = 'fas fa-volume-up'; }
+            else { audio.pause(); speaker.className = 'fas fa-volume-mute'; }
+        });
+        document.getElementById('volume-slider').addEventListener('input', (e) => { audio.volume = e.target.value; });
+
+        document.addEventListener('mousemove', (e) => { 
+            const cursor = document.getElementById('cursor');
+            cursor.style.opacity = '1'; 
+            cursor.style.left = e.clientX + 'px'; 
+            cursor.style.top = e.clientY + 'px'; 
+        });
+
+        fetch(`https://api.lanyard.rest/v1/users/708333532824600577`)
+            .then(res => res.json())
+            .then(data => {
+                const d = data.data;
+                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/708333532824600577/${d.discord_user.avatar}.png`;
+                document.getElementById('username').innerText = d.discord_user.username;
+                const customStatus = d.activities.find(a => a.type === 4);
+                document.getElementById('activity').innerText = (customStatus && customStatus.state) ? customStatus.state : "Online";
+            });
+    </script>
+</body>
+</html>

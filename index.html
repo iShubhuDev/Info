@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Shubhu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: white; cursor: none !important; }
+
+        /* Full screen layout wrapper */
+        .page-wrapper { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
+
+        /* Top Right Navigation */
+        .navbar { position: absolute; top: 30px; right: 40px; display: flex; gap: 30px; font-size: 0.9rem; text-transform: uppercase; }
+        .navbar a { color: #999; text-decoration: none; cursor: pointer !important; }
+        .navbar a.active { color: #7b2cbf; border-bottom: 2px solid #7b2cbf; }
+
+        /* Main Content Box */
+        .main-container { padding: 40px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; }
+        
+        /* Bottom Middle Copyright */
+        .footer-text { position: absolute; bottom: 20px; font-size: 0.7rem; color: #666; }
+
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; cursor: none !important; transition: opacity 0.5s ease; }
+        #overlay h1 { cursor: pointer !important; }
+
+        .audio-controls { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; z-index: 100; padding: 10px; cursor: none !important; }
+        #speaker-icon { font-size: 1.5rem; cursor: pointer !important; color: #7b2cbf; }
+        #volume-slider { cursor: pointer !important; width: 80px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .audio-controls:hover #volume-slider { opacity: 1; pointer-events: auto; }
+        
+        .cursor-glow { position: fixed; width: 15px; height: 15px; background-color: #7b2cbf; border-radius: 50%; pointer-events: none; z-index: 9999; box-shadow: 0 0 15px #7b2cbf, 0 0 30px #7b2cbf; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.2s ease; }
+
+        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover; }
+        
+        .brand { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .name { font-size: 4rem; font-weight: 700; color: #7b2cbf; margin: 0; }
+        
+        .location-container { font-size: 0.9rem; color: #999; margin-top: 5px; position: relative; cursor: default !important; }
+        .location-container::after { content: "Location"; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: #7b2cbf; opacity: 0; transition: opacity 0.3s ease; white-space: nowrap; margin-top: 5px; pointer-events: none; }
+        .location-container:hover::after { opacity: 1; }
+        
+        .discord-card { background: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; margin-top: 15px; }
+        .avatar-container { position: relative; }
+        #avatar { width: 45px; height: 45px; border-radius: 50%; }
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; position: absolute; bottom: 0px; right: 0px; border: 3px solid #000; }
+        
+        .social-links { margin-top: 25px; display: flex; gap: 25px; font-size: 1.8rem; }
+        .social-links a { color: #ffffff; transition: color 0.3s ease; cursor: pointer !important; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="overlay" onclick="enterSite()"><h1>CLICK TO ENTER</h1></div>
+
+    <audio id="bg-audio" loop><source src="audio.mp3" type="audio/mp3"></audio>
+
+    <div class="audio-controls">
+        <i id="speaker-icon" class="fas fa-volume-up"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+    </div>
+
+    <div id="cursor" class="cursor-glow"></div>
+    <video autoplay muted loop id="bg-video"><source src="BG.mp4" type="video/mp4"></video>
+
+    <div class="page-wrapper">
+        <nav class="navbar"><a href="index.html" class="active">Info</a><a href="projects.html">Projects</a></nav>
+
+        <div class="main-container">
+            <div class="brand">
+                <h1 class="name">@Shubhu</h1>
+                <p>An isolated frequency.</p>
+                <div class="location-container"><i class="fa-solid fa-location-dot"></i> Nepal</div>
+                <div id="discord-status" class="discord-card">
+                    <div class="avatar-container"><img id="avatar" src="" alt="Avatar"><div id="status-indicator" class="status-dot"></div></div>
+                    <div class="user-info"><div id="username" class="username">Loading...</div><div id="activity" class="activity">Loading...</div></div>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-discord"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="mailto:email@example.com"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer-text">&copy; 2026 @Shubhu. All rights reserved.</footer>
+    </div>
+
+    <script>
+        function enterSite() {
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 500);
+            document.getElementById('bg-audio').play();
+        }
+
+        document.getElementById('speaker-icon').addEventListener('click', (e) => {
+            const audio = document.getElementById('bg-audio');
+            if (audio.paused) { audio.play(); e.target.className = 'fas fa-volume-up'; }
+            else { audio.pause(); e.target.className = 'fas fa-volume-mute'; }
+        });
+        document.getElementById('volume-slider').addEventListener('input', (e) => { document.getElementById('bg-audio').volume = e.target.value; });
+
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => { cursor.style.opacity = '1'; cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+        document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+        
+        fetch(`https://api.lanyard.rest/v1/users/708333532824600577`)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) return;
+                const d = data.data;
+                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/708333532824600577/${d.discord_user.avatar}.png`;
+                document.getElementById('username').innerText = d.discord_user.username;
+                
+                const status = d.discord_status;
+                let color = '#747f8d';
+                if (status === 'online') color = '#43b581';
+                else if (status === 'idle') color = '#faa61a';
+                else if (status === 'dnd') color = '#f04747';
+                document.getElementById('status-indicator').style.backgroundColor = color;
+                
+                const customStatus = d.activities.find(a => a.type === 4);
+                document.getElementById('activity').innerText = (customStatus && customStatus.state) ? customStatus.state : (d.activities.length > 0 ? d.activities[0].name : "Online");
+            });
+    </script>
+</body>
+</html>
