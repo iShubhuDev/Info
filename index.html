@@ -8,28 +8,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: white; cursor: none !important; }
+        * { cursor: none !important; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: white; }
 
-        /* Full screen layout wrapper */
         .page-wrapper { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
 
-        /* Top Right Navigation */
         .navbar { position: absolute; top: 30px; right: 40px; display: flex; gap: 30px; font-size: 0.9rem; text-transform: uppercase; }
-        .navbar a { color: #999; text-decoration: none; cursor: pointer !important; }
+        .navbar a { color: #999; text-decoration: none; cursor: none !important; }
         .navbar a.active { color: #7b2cbf; border-bottom: 2px solid #7b2cbf; }
 
-        /* Main Content Box */
         .main-container { padding: 40px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; }
         
-        /* Bottom Middle Copyright */
         .footer-text { position: absolute; bottom: 20px; font-size: 0.7rem; color: #666; }
 
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; cursor: none !important; transition: opacity 0.5s ease; }
-        #overlay h1 { cursor: pointer !important; }
+        #overlay h1 { cursor: none !important; }
 
         .audio-controls { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; z-index: 100; padding: 10px; cursor: none !important; }
-        #speaker-icon { font-size: 1.5rem; cursor: pointer !important; color: #7b2cbf; }
-        #volume-slider { cursor: pointer !important; width: 80px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #speaker-icon { font-size: 1.5rem; cursor: none !important; color: #7b2cbf; }
+        #volume-slider { cursor: none !important; width: 80px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .audio-controls:hover #volume-slider { opacity: 1; pointer-events: auto; }
         
         .cursor-glow { position: fixed; width: 15px; height: 15px; background-color: #7b2cbf; border-radius: 50%; pointer-events: none; z-index: 9999; box-shadow: 0 0 15px #7b2cbf, 0 0 30px #7b2cbf; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.2s ease; }
@@ -39,7 +36,7 @@
         .brand { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .name { font-size: 4rem; font-weight: 700; color: #7b2cbf; margin: 0; }
         
-        .location-container { font-size: 0.9rem; color: #999; margin-top: 5px; position: relative; cursor: default !important; }
+        .location-container { font-size: 0.9rem; color: #999; margin-top: 5px; position: relative; cursor: none !important; }
         .location-container::after { content: "Location"; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: #7b2cbf; opacity: 0; transition: opacity 0.3s ease; white-space: nowrap; margin-top: 5px; pointer-events: none; }
         .location-container:hover::after { opacity: 1; }
         
@@ -49,7 +46,7 @@
         .status-dot { width: 12px; height: 12px; border-radius: 50%; position: absolute; bottom: 0px; right: 0px; border: 3px solid #000; }
         
         .social-links { margin-top: 25px; display: flex; gap: 25px; font-size: 1.8rem; }
-        .social-links a { color: #ffffff; transition: color 0.3s ease; cursor: pointer !important; }
+        .social-links a { color: #ffffff; transition: color 0.3s ease; cursor: none !important; }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -106,7 +103,6 @@
 
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => { cursor.style.opacity = '1'; cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-        document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
         
         fetch(`https://api.lanyard.rest/v1/users/708333532824600577`)
             .then(res => res.json())
